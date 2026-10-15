@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Loan Hub Amartha</title>
+<meta name="robots" content="noindex,nofollow">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef1f8;--card:#fff;--tx:#161a33;--mut:#697093;--bd:#dde1f1;--line2:#c6cce4;--pri:#5b5bf0;--pri2:#eceeff;--pri3:#dde0ff;--ok:#0f9d73;--okbg:#e2f7ef;--bad:#e5484d;--badbg:#fdeaea;--warn:#b86e00;--warnbg:#fff3d6;--info:#2f6fed;--infobg:#e6efff;--sh:0 1px 2px rgba(22,26,51,.06);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1120;--card:#181b30;--tx:#eceefb;--mut:#9aa0c3;--bd:#2a2e4c;--line2:#3a3f66;--pri:#8b8bff;--pri2:#23264a;--pri3:#2d3160;--ok:#4ade9f;--okbg:#123a2d;--bad:#ff7b80;--badbg:#402024;--warn:#f6bd4b;--warnbg:#3d3014;--info:#7fa8ff;--infobg:#1b2a52}}
+:root[data-theme="dark"]{--bg:#0f1120;--card:#181b30;--tx:#eceefb;--mut:#9aa0c3;--bd:#2a2e4c;--line2:#3a3f66;--pri:#8b8bff;--pri2:#23264a;--pri3:#2d3160;--ok:#4ade9f;--okbg:#123a2d;--bad:#ff7b80;--badbg:#402024;--warn:#f6bd4b;--warnbg:#3d3014;--info:#7fa8ff;--infobg:#1b2a52}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,var(--pri2) 0,var(--bg) 260px) no-repeat,var(--bg);color:var(--tx);font:14px/1.55 "Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.w{max-width:2200px;margin:0 auto;padding:16px 14px 40px}
+h1{font-size:28px;font-weight:800;letter-spacing:-.025em;margin:4px 0 2px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.pill{font-size:12px;font-weight:700;letter-spacing:0;padding:3px 12px;border-radius:999px;background:var(--pri);color:#fff}
+h2{font-size:16px;font-weight:700;letter-spacing:-.01em;margin:0 0 10px}
+.sub,.m{color:var(--mut)}.m{font-size:12.5px}.sub{margin-bottom:16px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:14px;margin-bottom:16px;box-shadow:var(--sh)}
+.card.m{background:var(--pri2);border-color:transparent;box-shadow:none}
+.row{display:flex;flex-wrap:wrap;gap:10px 12px;align-items:end}
+#clr{margin-left:auto}
+label{display:block;font-size:12px;font-weight:600;color:var(--mut);margin-bottom:4px}
+input,select,button{font:inherit;padding:9px 13px;border-radius:12px;border:1px solid var(--bd);background:var(--card);color:var(--tx)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pri);box-shadow:0 0 0 4px var(--pri2)}
+input[type=checkbox]{width:18px;height:18px;padding:0;accent-color:var(--pri);cursor:pointer}
+input[type=file]{padding:6px 8px;border-style:dashed;max-width:100%}
+input[type=file]::file-selector-button{border:0;border-radius:999px;background:var(--pri);color:#fff;font:inherit;font-weight:600;padding:6px 14px;margin-right:10px;cursor:pointer}
+button{cursor:pointer;border:0;border-radius:999px;padding:9px 16px;background:var(--pri);color:#fff;font-weight:600;transition:transform .12s,box-shadow .12s}
+button:hover{box-shadow:0 8px 18px -8px var(--pri)}button:active{transform:scale(.97)}button:focus-visible{outline:3px solid var(--pri3);outline-offset:2px}
+button.g{background:var(--pri2);color:var(--pri);box-shadow:none}button.g:hover{background:var(--pri3)}
+.tabs{position:sticky;top:8px;z-index:5;display:flex;gap:4px;padding:5px;margin:4px 0 16px;width:max-content;max-width:100%;overflow-x:auto;background:var(--card);border:1px solid var(--bd);border-radius:999px;box-shadow:var(--sh)}
+.tabs button{background:transparent;color:var(--mut);padding:9px 18px;white-space:nowrap;box-shadow:none}
+.tabs button:hover{color:var(--tx);box-shadow:none}
+.tabs button.on{background:var(--pri);color:#fff;box-shadow:0 8px 18px -8px var(--pri)}
+.k{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-bottom:16px}
+.kp{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:14px 16px;box-shadow:var(--sh)}
+.kp span{font-size:12px;font-weight:600;color:var(--mut)}
+.kp b{display:block;font-size:22px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;margin-top:2px}
+.kp small{display:block;color:var(--mut);font-size:12px;margin-top:2px}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
+.sc{overflow:auto;max-width:100%;max-height:72vh;border:1px solid var(--bd);border-radius:14px}
+table{border-collapse:separate;border-spacing:0;width:100%;min-width:0;font-size:12.5px;font-variant-numeric:tabular-nums}
+th{position:sticky;top:0;z-index:1;background:var(--pri2);color:var(--mut);text-align:left;padding:8px 6px;font-size:11.5px;font-weight:700;white-space:nowrap}
+td{padding:7px 6px;border-bottom:1px solid var(--bd);white-space:nowrap}
+td.wrap,td[data-sk]{white-space:normal;min-width:90px}
+.pcs{color:var(--mut);font-size:11px;margin-left:3px}
+td input[type=date]{width:122px}td select{max-width:118px}
+tbody tr:last-child td{border-bottom:0}tbody tr:hover td{background:var(--pri2)}
+td.n,th.n{text-align:right}
+tfoot td{font-weight:800;background:var(--pri2);border-top:1px solid var(--bd);border-bottom:0}
+tr.c{cursor:pointer}
+.bar{height:12px;border-radius:99px;background:linear-gradient(90deg,var(--pri),#9a8cff);min-width:3px}
+.bad{color:var(--bad);font-weight:700}.ok{color:var(--ok);font-weight:700}.warn{color:var(--warn);font-weight:700}
+.tag{display:inline-block;padding:2px 10px;border-radius:999px;background:var(--pri2);color:var(--pri);font-size:11px;font-weight:700}
+.tag.t-ok{background:var(--okbg);color:var(--ok)}.tag.t-info{background:var(--infobg);color:var(--info)}.tag.t-warn{background:var(--warnbg);color:var(--warn)}.tag.t-bad{background:var(--badbg);color:var(--bad)}
+.tag[data-d-old]{padding:5px 13px;font-size:12px;font-weight:600;border:1px solid var(--bd);background:var(--card);color:var(--tx);transition:background .12s,transform .12s}
+.tag[data-d]:hover{background:var(--pri2)}
+textarea{width:100%;min-height:60px;padding:10px;border-radius:12px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);font:13px ui-monospace,Menlo,monospace}
+.cloud{font-size:12px;font-weight:600;letter-spacing:0;padding:3px 11px;border-radius:999px;background:var(--card);border:1px solid var(--bd);cursor:pointer;color:var(--mut)}.cloud.ok{color:var(--ok)}.cloud.bad{color:var(--bad)}
+.sec{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);margin:20px 2px 8px}
+.grp{background:var(--card);border:1px solid var(--line2);border-radius:16px;margin-bottom:18px;overflow:hidden}
+.gh{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 16px;background:var(--pri2);border-bottom:1px solid var(--line2)}
+.gn{font-size:16px;font-weight:800;letter-spacing:-.01em}
+.ga{display:flex;gap:8px;flex-wrap:wrap}
+.gp{display:flex;gap:12px;align-items:end;flex-wrap:wrap;padding:12px 16px;border-bottom:1px solid var(--bd);background:var(--bg)}
+.gl{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);align-self:center;margin-right:4px}
+.grp .k{padding:14px 16px;margin:0;border-bottom:1px solid var(--bd)}
+.grp .kp{box-shadow:none;border-radius:12px;background:var(--card)}
+.dt>summary{cursor:pointer;list-style:none;padding:12px 16px;font-weight:700;color:var(--pri);display:flex;align-items:center;gap:8px;user-select:none}
+.dt>summary::-webkit-details-marker{display:none}
+.dt>summary::before{content:"▸";display:inline-block;transition:transform .15s}
+.dt[open]>summary::before{transform:rotate(90deg)}
+.dt[open]>summary{border-bottom:1px solid var(--bd)}
+.dt .sc{border:0;border-radius:0;max-height:70vh}
+.gh button.g{background:var(--card);border:1px solid var(--line2)}
+.gh button.g:hover{background:var(--pri3)}
+button.cp{padding:0 8px;margin-left:6px;font-size:12px;line-height:20px;border-radius:6px;background:var(--pri2);color:var(--pri);box-shadow:none;vertical-align:middle}
+button.cp:hover{background:var(--pri3);box-shadow:none}
+
+.seg{display:inline-flex;background:var(--bg);border:1px solid var(--bd);border-radius:999px;padding:3px}
+.seg button{padding:6px 14px;font-size:12px;background:transparent;color:var(--mut);box-shadow:none}
+.seg button.on{background:var(--pri);color:#fff}
+button.stp{padding:7px 12px;font-size:15px;line-height:1}
+.chips{display:flex;flex-wrap:wrap;gap:4px 6px;margin-top:10px}
+.chip{font-size:11px;padding:2px 9px;border-radius:999px;color:var(--mut);background:var(--bg);cursor:pointer;user-select:none}
+.chip:hover{background:var(--pri2);color:var(--pri)}.chip.on{background:var(--pri);color:#fff}
+.grp .k.gk{grid-template-columns:minmax(260px,1.5fr) repeat(auto-fit,minmax(170px,1fr))}
+.qb{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.qb button{padding:4px 11px;font-size:12px}
+.qb button.on{background:var(--ok);color:#fff}
+.pay{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+.pay input,.pay select{padding:6px 10px;font-size:13px;width:100%}
+
+@media (min-width:900px){.k{grid-template-columns:repeat(3,1fr)}}
+@media (min-width:1500px){.k{grid-template-columns:repeat(6,1fr)}}
+@media (max-width:640px){.tabs button{padding:8px 12px;font-size:13px}#clr{margin-left:0}h1{font-size:22px}.kp b{font-size:19px}.card{padding:14px}.w{padding:14px 12px 32px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body><div class="w">
+<h1>Loan Hub <span class="pill">Amartha</span> <span id="cloud" class="cloud m" title="Data disimpan di browser ini. Gunakan Cadangkan data atau Google Drive untuk mengamankannya.">💾 …</span></h1><div class="sub">Khusus pendanaan PT Amartha Mikro Fintek. Upload data loan &amp; ledger Odoo secara berkala; data yang sama (No PO) otomatis ditimpa.</div>
+<div class="card"><div class="row">
+<div><label>Data Loan (.xlsx)</label><input type="file" id="fl" accept=".xlsx,.xls,.csv"></div>
+<div><label>Ledger Odoo (.xlsx)</label><input type="file" id="fg" accept=".xlsx,.xls,.csv"></div>
+<button class="g" data-x="loan">Unduh Data Loan (Excel)</button><button class="g" data-x="rk">Unduh Hasil Rekon (Excel)</button><button data-x="all">Unduh Semua (1 file)</button><button class="g" id="bk">Cadangkan data</button><button class="g" id="rs">Pulihkan cadangan</button><input type="file" id="rsf" accept=".json" hidden><button class="g" id="clr">Hapus semua data</button></div>
+<div class="m" id="msg" style="margin-top:8px"></div></div>
+<details class="card"><summary style="cursor:pointer;font-weight:700">☁ Simpan otomatis ke Google Drive <span class="m" style="font-weight:500">(opsional, supaya data aman kalau browser dibersihkan)</span></summary><div class="row" style="margin-top:12px"><div><label>URL Apps Script</label><input id="gsu" style="width:380px;max-width:100%" placeholder="https://script.google.com/macros/s/…/exec"></div><div><label>Kode rahasia</label><input id="gst" type="password" style="width:200px" autocomplete="off"></div><button id="gsc">Hubungkan</button><button class="g" id="gsn">Simpan sekarang</button><button class="g" id="gsl">Muat dari Google</button><button class="g" id="gsx">Putuskan</button></div><div class="m" id="gsm" style="margin-top:8px">URL dan kode rahasia hanya disimpan di browser ini, tidak ikut ke file cadangan.</div></details>
+<div class="tabs" id="tabs"><button data-t="dash" class="on">📊 Dashboard</button><button data-t="rp">💸 Repayment</button><button data-t="pet">🧑‍🌾 Peternak</button><button data-t="rek">🔍 Rekonsiliasi</button></div>
+<div id="v"></div></div>
+<script>
+const $=id=>document.getElementById(id);const fmt=n=>(n||0).toLocaleString("id-ID",{maximumFractionDigits:0});const pc=n=>(n*100).toFixed(2).replace(".",",")+"%";
+const esc=s=>String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+const key=p=>String(p).replace(/\s+/g,"").toUpperCase();
+let S={loans:{},led:{},meta:{},done:{},manual:{},bank:{},acct:{},paid:{},sy:{}},rod="",tmin="",tmax="",rdue=true,cut="",rf="",rq="",ra="",pm="d",rm="",r1="",r2="",nq="",rd="",rb="",tab="dash",sel="",qp="",inclRej=false,side="deb",tol=1000,d1="",d2="";
+const today=(()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")})();
+const dd=s=>s?s.split("-").reverse().join("/"):"-";
+const dayDiff=s=>Math.round((new Date(s)-new Date(today))/864e5);
+function idb(){return new Promise((ok,no)=>{try{const r=indexedDB.open("loanhub",1);r.onupgradeneeded=()=>r.result.createObjectStore("s");r.onsuccess=()=>ok(r.result);r.onerror=()=>no()}catch(e){no(e)}})}
+async function persist(){try{const d=await idb();d.transaction("s","readwrite").objectStore("s").put(S,"d")}catch(e){}}
+async function save(){await persist();schedSync();gsSched()}
+async function load(){try{const d=await idb();return await new Promise(ok=>{const r=d.transaction("s").objectStore("s").get("d");r.onsuccess=()=>ok(r.result);r.onerror=()=>ok(null)})}catch(e){return null}}
+function ymd(v){let d;if(v instanceof Date)d=new Date(v.getTime()+43200000);else if(typeof v==="string"){let m=v.match(/(\d{4})-(\d{2})-(\d{2})/);if(m)return m[0];m=v.match(/(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})/);if(m)return m[3]+"-"+m[2].padStart(2,"0")+"-"+m[1].padStart(2,"0");m=v.match(/(\d{1,2})[\s\/.-]+([A-Za-z]{3,})[\s\/.-]+(\d{4})/);if(m){const M={jan:1,feb:2,mar:3,apr:4,mei:5,may:5,jun:6,jul:7,agu:8,agt:8,aug:8,sep:9,okt:10,oct:10,nov:11,des:12,dec:12}[m[2].slice(0,3).toLowerCase()];if(M)return m[3]+"-"+String(M).padStart(2,"0")+"-"+m[1].padStart(2,"0")}return""}else return"";
+if(isNaN(d)||d.getFullYear()<2000)return"";return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+const num=v=>typeof v==="number"?v:(parseFloat(String(v).replace(/[^\d.-]/g,""))||0);
+function readWb(buf){const wb=XLSX.read(buf,{cellDates:true});return wb.Sheets[wb.SheetNames[0]]}
+function parseLoans(buf){const js=XLSX.utils.sheet_to_json(readWb(buf),{defval:0});const out=[];
+for(const r of js){const k=Object.keys(r);const g=p=>{const q=p.toLowerCase();return r[k.find(x=>x.toLowerCase()===q)||k.find(x=>x.toLowerCase().startsWith(q))]};
+const po=g("Underlying Document");if(typeof po!=="string"||!/^PO/i.test(po.trim()))continue;
+out.push({po:po.trim(),nama:String(g("Nama Borrower")||"").trim(),rab:String(g("Kode RAB")||""),nom:num(g("Nominal pengajuan")),cair:num(g("Pencairan")),fee:num(g("Platform Fee")),int:num(g("Interest")),tt:num(g("Total Tagihan")),tdb:num(g("Total Tagihan"))||num(g("Total Tagihan (Dibulatkan)")),due:ymd(g("Due Date")),dis:ymd(g("Disbursement Date")),rep:ymd(g("Repayment Date")),st:String(g("Loan Status")||"").trim(),pj:ymd(g("tanggal pengajuan"))})}return out}
+const bayar=l=>l.tt||l.tdb;
+function parseLedger(buf){const a=XLSX.utils.sheet_to_json(readWb(buf),{header:1,raw:true,defval:""});
+let h=a.findIndex(r=>r.some(c=>/debit/i.test(c))&&r.some(c=>/credit|kredit/i.test(c)));if(h<0)throw new Error("Kolom Debit/Credit tidak ditemukan di ledger");
+const H=a[h].map(String);const di=H.findIndex(c=>/date|tanggal/i.test(c)),db=H.findIndex(c=>/debit/i.test(c)),cr=H.findIndex(c=>/credit|kredit/i.test(c)),pi=H.findIndex(c=>/partner/i.test(c));const out=[],seen={};
+for(const r of a.slice(h+1)){if(pi>=0&&!/amartha/i.test(String(r[pi])))continue;const dt=ymd(r[di]);const deb=num(r[db]),cre=num(r[cr]);if(!dt||(!deb&&!cre))continue;
+const txt=r.filter((c,i)=>typeof c==="string"&&c.trim()&&i!==di).join(" | ");const pos=[...new Set((txt.match(/PO\/[A-Z0-9]+\/\d+(?:\s*-\s*\d+)?/gi)||[]).map(key))];
+let k=[dt,txt,deb,cre].join("¦");seen[k]=(seen[k]||0)+1;out.push({k:k+"¦"+seen[k],dt,txt,deb,cre,pos})}
+return {out,cols:[H[di],H[db],H[cr]]}}
+function msg(t){$("msg").textContent=t}
+$("fl").addEventListener("change",async e=>{const f=e.target.files[0];if(!f)return;try{msg("Membaca…");const r=parseLoans(await f.arrayBuffer());let n=0,u=0;
+r.forEach(l=>{const k=key(l.po);S.loans[k]?u++:n++;S.loans[k]=l});S.meta.loan=f.name+" · "+new Date().toLocaleString("id-ID");S.meta.pv=2;const b4=Object.keys(S.manual).length;ovl();const dr=b4-Object.keys(S.manual).length;await save();msg(`Loan: ${r.length} baris dibaca → ${n} PO baru, ${u} PO ditimpa (total ${Object.keys(S.loans).length} PO).${dr?` ${dr} tanda bayar manual dihapus karena master sudah memuat tanggal repayment.`:""}`);render()}catch(x){msg("Gagal: "+x.message)}e.target.value=""});
+$("fg").addEventListener("change",async e=>{const f=e.target.files[0];if(!f)return;try{msg("Membaca…");const {out,cols}=parseLedger(await f.arrayBuffer());let n=0,u=0;
+out.forEach(l=>{S.led[l.k]?u++:n++;S.led[l.k]=l});S.meta.led=f.name;await save();msg(`Ledger: ${out.length} baris → ${n} baru, ${u} ditimpa. Kolom terbaca: ${cols.join(" / ")}.`);render()}catch(x){msg("Gagal: "+x.message)}e.target.value=""});
+$("bk").onclick=()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(S)],{type:"application/json"}));a.download="loan-hub-cadangan-"+today+".json";document.body.appendChild(a);a.click();a.remove();msg("Cadangan diunduh. Simpan file ini; pakai Pulihkan cadangan untuk memuatnya di perangkat lain.")};
+$("rs").onclick=()=>$("rsf").click();
+$("rsf").addEventListener("change",async e=>{const f=e.target.files[0];if(!f)return;try{const v=JSON.parse(await f.text());if(!v||typeof v.loans!=="object")throw new Error("bukan file cadangan Loan Hub");if(!confirm("Timpa semua data di browser ini dengan isi cadangan ("+Object.keys(v.loans).length+" PO)?")){e.target.value="";return}
+S=v;S.led=S.led||{};S.meta=S.meta||{};S.done=S.done||{};S.manual=S.manual||{};S.bank=S.bank||{};S.acct=S.acct||{};S.paid=S.paid||{};S.sy={};await save();msg("Cadangan dipulihkan: "+Object.keys(S.loans).length+" PO, "+Object.keys(S.led).length+" baris ledger.");render()}catch(x){msg("Gagal memulihkan: "+x.message)}e.target.value=""});
+$("clr").onclick=async()=>{if(!confirm("Hapus semua data loan & ledger di browser ini? Buat cadangan dulu kalau perlu."))return;S={loans:{},led:{},meta:{},done:{},manual:{},bank:{},acct:{},paid:{},sy:S.sy||{}};await save();msg("Data dihapus.");render()};
+$("tabs").onclick=e=>{const b=e.target.closest("button");if(!b)return;tab=b.dataset.t;[...$("tabs").children].forEach(x=>x.classList.toggle("on",x===b));render()};
+const L=()=>Object.values(S.loans);
+function dash(){const all=L().filter(l=>l.st!=="Reject");if(!all.length)return'<div class="card m">Belum ada data loan.</div>';
+const sm=(a,k)=>a.reduce((s,x)=>s+x[k],0);const nom=sm(all,"nom"),fee=sm(all,"fee"),it=sm(all,"int");const pr=all.filter(l=>l.nom>0);
+const avg=k=>pr.reduce((s,x)=>s+x[k]/x.nom,0)/pr.length;
+const os=all.filter(l=>l.st==="Disburse"),ap=all.filter(l=>l.st==="Approve"),ov=os.filter(l=>l.due&&l.due<today);
+const B=[["Terlambat",x=>dayDiff(x.due)<0],["0–7 hari",x=>dayDiff(x.due)>=0&&dayDiff(x.due)<=7],["8–30 hari",x=>dayDiff(x.due)>7&&dayDiff(x.due)<=30],[">30 hari",x=>dayDiff(x.due)>30]].map(([n,f])=>{const a=os.filter(x=>x.due&&f(x));return[n,a.length,sm(a,"tdb")]});
+const mx=Math.max(...B.map(b=>b[2]),1);
+const dues={};os.forEach(l=>{const d=l.due||"-";(dues[d]=dues[d]||[]).push(l)});
+const dl=Object.entries(dues).sort().slice(0,15);
+const pet={};os.forEach(l=>{pet[l.nama]=(pet[l.nama]||0)+l.tdb});const top=Object.entries(pet).sort((a,b)=>b[1]-a[1]).slice(0,10);
+return`<div class="k"><div class="kp"><span>Total PO (tanpa Reject)</span><b>${fmt(all.length)}</b><small>Nominal ${fmt(nom)}</small></div>
+<div class="kp"><span>Rata-rata Interest</span><b>${pc(avg("int"))}</b><small>Tertimbang ${pc(nom?it/nom:0)} · total ${fmt(it)}</small></div>
+<div class="kp"><span>Rata-rata Admin Fee</span><b>${pc(avg("fee"))}</b><small>Tertimbang ${pc(nom?fee/nom:0)} · total ${fmt(fee)}</small></div>
+<div class="kp"><span>Hutang berjalan (Disburse)</span><b>${fmt(sm(os,"tdb"))}</b><small>${os.length} PO · sudah cair, belum lunas</small></div>
+<div class="kp"><span>Lewat jatuh tempo</span><b class="bad">${fmt(sm(ov,"tdb"))}</b><small>${ov.length} PO</small></div>
+<div class="kp"><span>Approved (menunggu pencairan)</span><b>${fmt(sm(ap,"tdb"))}</b><small>${ap.length} PO · kemungkinan besar dicairkan</small></div></div><div class="card m" style="padding:10px 14px"><b>Arti status:</b> <b>Disburse</b> = pencairan berhasil dan timbul pengakuan hutang · <b>Approved</b> = disetujui, kemungkinan besar akan dicairkan (berubah ke Disburse kalau pencairan lancar) · <b>Reject</b> = pinjaman ditolak, tidak dihitung · <b>Completed</b> = sudah lunas.</div>
+<div class="g2"><div class="card"><h2>Umur jatuh tempo hutang Disburse (belum lunas)</h2>${B.map(b=>`<div style="margin:8px 0"><div class="m">${b[0]} · ${b[1]} PO · ${fmt(b[2])}</div><div class="bar" style="width:${b[2]/mx*100}%;${b[0]==="Terlambat"?"background:var(--bad)":""}"></div></div>`).join("")}</div>
+<div class="card"><h2>Top 10 peternak dengan hutang Disburse berjalan</h2><div class="sc"><table style="min-width:0"><tbody>${top.map(t=>`<tr class="c" data-p="${esc(t[0])}"><td>${esc(t[0])}</td><td class="n">${fmt(t[1])}</td></tr>`).join("")||'<tr><td class="m">Tidak ada</td></tr>'}</tbody></table></div></div></div>
+<div class="card"><h2>Jadwal jatuh tempo terdekat</h2><div class="sc"><table><thead><tr><th>Jatuh tempo</th><th>Selisih hari</th><th class="n">Jml PO</th><th class="n">Total tagihan</th></tr></thead><tbody>${dl.map(([d,a])=>{const x=d==="-"?0:dayDiff(d);return`<tr><td>${dd(d)}</td><td class="${x<0?"bad":x<=7?"warn":""}">${x<0?"terlambat "+(-x)+" hr":x+" hr lagi"}</td><td class="n">${a.length}</td><td class="n">${fmt(sm(a,"tdb"))}</td></tr>`}).join("")}</tbody></table></div></div>`}
+function agg(a){const s=k=>a.reduce((t,x)=>t+x[k],0);return{n:a.length,nom:s("nom"),bay:a.reduce((t,x)=>t+bayar(x),0),fee:s("fee"),int:s("int"),os:a.filter(x=>x.st==="Disburse").reduce((t,x)=>t+x.tdb,0)}}
+function pet(){const base=L().filter(l=>inclRej||l.st!=="Reject");const q=qp.toLowerCase();const G={};base.forEach(l=>(G[l.nama]=G[l.nama]||[]).push(l));
+let names=Object.keys(G).filter(n=>!q||n.toLowerCase().includes(q)||G[n].some(l=>l.po.toLowerCase().includes(q))).sort();
+const rows=names.map(n=>[n,agg(G[n])]).sort((a,b)=>b[1].os-a[1].os);
+let h=`<div class="card"><div class="row"><div style="flex:1;min-width:200px"><label>Cari nama peternak / No PO</label><input id="qp" style="width:100%" value="${esc(qp)}"></div><label style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="rj" ${inclRej?"checked":""}> tampilkan Reject</label></div></div>`;
+h+=`<div class="card"><div class="sc"><table><thead><tr><th>Peternak</th><th class="n">PO</th><th class="n">Nominal pengajuan</th><th class="n">Total tagihan</th><th class="n">Admin</th><th class="n">Interest</th><th class="n">Hutang berjalan (Disburse)</th></tr></thead><tbody>${rows.slice(0,200).map(([n,a])=>`<tr class="c" data-p="${esc(n)}"><td>${esc(n)}</td><td class="n">${a.n}</td><td class="n">${fmt(a.nom)}</td><td class="n">${fmt(a.bay)}</td><td class="n">${fmt(a.fee)}</td><td class="n">${fmt(a.int)}</td><td class="n ${a.os?"warn":""}">${fmt(a.os)}</td></tr>`).join("")||'<tr><td class="m">Tidak ada data</td></tr>'}</tbody></table></div></div>`;
+if(sel&&G[sel]){const g=G[sel].slice().sort((a,b)=>(a.dis||a.pj)<(b.dis||b.pj)?-1:1),a=agg(g);
+h+=`<div class="card"><h2>${esc(sel)}</h2><div class="sc"><table><thead><tr><th>No PO</th><th>Kode RAB</th><th>Status</th><th>Cair</th><th>Jatuh tempo</th><th>Repayment</th><th class="n">Nominal</th><th class="n">Admin</th><th class="n">Interest</th><th class="n">Total tagihan</th></tr></thead><tbody>${g.map(l=>`<tr><td>${esc(l.po)}</td><td>${esc(l.rab)}</td><td><span class="tag">${esc(l.st)}</span></td><td>${dd(l.dis)}</td><td class="${l.st==="Disburse"&&l.due<today?"bad":""}">${dd(l.due)}</td><td>${dd(l.rep)}</td><td class="n">${fmt(l.nom)}</td><td class="n">${fmt(l.fee)}</td><td class="n">${fmt(l.int)}</td><td class="n">${fmt(bayar(l))}</td></tr>`).join("")}</tbody><tfoot><tr><td colspan="6">Total (${a.n} PO) · hutang berjalan ${fmt(a.os)}</td><td class="n">${fmt(a.nom)}</td><td class="n">${fmt(a.fee)}</td><td class="n">${fmt(a.int)}</td><td class="n">${fmt(a.bay)}</td></tr></tfoot></table></div>
+<div style="margin-top:10px"><button class="g" id="cp">Copy semua No PO</button></div><textarea id="pot" readonly>${esc(g.map(l=>l.po).join(", "))}</textarea></div>`}
+return h}
+function rek(){const led0=Object.values(S.led||{});if(!L().length||!led0.length)return'<div class="card m">Upload data loan dan ledger Odoo (Amartha) dulu untuk rekonsiliasi.</div>';
+if(!cut)cut=led0.reduce((m,l)=>l.dt>m?l.dt:m,"");
+const led=led0.filter(l=>l.dt<=cut),near=(x,y)=>Math.abs(x-y)<=tol,A={},ml=[],np=[],A0=k=>A[k]||(A[k]={cre:0,deb:0,n:0});
+led.forEach(l=>{const amt=l.deb||l.cre;if(!l.pos.length){np.push(l);return}
+if(l.pos.length===1){const a=A0(l.pos[0]);a.cre+=l.cre;a.deb+=l.deb;a.n++;return}
+const f=l.pos.filter(p=>S.loans[p]),sum=f.reduce((s,p)=>s+bayar(S.loans[p]),0);
+if(f.length===l.pos.length&&near(sum,amt)){l.pos.forEach(p=>{const a=A0(p),v=bayar(S.loans[p]);a.cre+=l.cre?v:0;a.deb+=l.deb?v:0;a.n++})}else ml.push({l,sum})});
+let rows=[];Object.entries(S.loans).forEach(([k,l])=>{const a=A[k]||{cre:0,deb:0,n:0},is=[],nom=l.nom,tg=bayar(l);
+if(l.st==="Reject"){if(a.n)is.push(["Reject di loan tapi ada di ledger",2])}
+else if(l.st==="Approve"){if(a.cre)is.push(["Masih Approve di master tapi credit sudah ada di ledger (pencairan sudah berjalan, master belum update ke Disburse)",2])}
+else{if(l.dis&&l.dis<=cut){if(!a.cre)is.push(["Credit (pencatatan pinjaman) belum ada di ledger",l.st==="Completed"?1:2]);else if(!near(a.cre,nom))is.push(["Nominal credit beda: ledger "+fmt(a.cre)+" vs pengajuan "+fmt(nom),2])}
+if(l.st==="Disburse"&&a.deb)is.push(["Ada debit di ledger padahal loan masih Disburse (cek status/tgl repayment di master)",2]);
+if(l.st==="Completed"){if(l.rep&&l.rep<=cut){if(!a.deb)is.push(["Repayment belum diinput di ledger",2]);else if(!near(a.deb,nom)&&!near(a.deb,tg))is.push(["Nominal debit beda: ledger "+fmt(a.deb)+" vs pokok "+fmt(nom)+" / tagihan "+fmt(tg),2])}else is.push(["Repayment setelah cut-off ledger",0])}}
+if(l.st!=="Reject"||a.n)rows.push({l,a,is,sv:Math.max(0,...is.map(x=>x[1]))})});
+const lo=Object.keys(A).filter(k=>!S.loans[k]);
+const iss=rows.filter(r=>r.sv>0),nrep=rows.filter(r=>r.is.some(x=>x[0].startsWith("Repayment belum"))),ncr=rows.filter(r=>r.is.some(x=>x[0].startsWith("Credit")||x[0].startsWith("Nominal credit")));
+const ledNet=led.reduce((s,l)=>s+l.cre-l.deb,0),loanOs=Object.values(S.loans).filter(l=>l.st==="Disburse"&&l.dis&&l.dis<=cut).reduce((s,l)=>s+l.nom,0);
+const q=rq.toLowerCase();let sh=rows.filter(r=>(!rf||(rf==="issue"?r.sv>0:r.is.some(x=>x[0].includes(rf))))&&(!q||(r.l.po+r.l.nama).toLowerCase().includes(q))).sort((a,b)=>b.sv-a.sv||(a.l.po<b.l.po?-1:1));
+window.__pl=sh.map(r=>r.l.po);window.__rk={rows,lo,A,ml,np,cut};
+const opt=[["","Semua"],["issue","Perlu dicek saja"],["Repayment belum","Repayment belum diinput"],["Credit","Credit belum ada"],["Nominal","Nominal beda"],["Ada debit","Debit tapi masih Disburse"],["Masih Approve","Approve tapi credit sudah ada"]];
+return`<div class="card"><div class="row"><div><label>Cut-off tanggal ledger</label><input type="date" id="cu" value="${cut}"></div><div><label>Toleransi selisih</label><input type="number" id="tl" value="${tol}" style="width:90px"></div><div><label>Tampilkan</label><select id="rf">${opt.map(o=>`<option value="${o[0]}" ${o[0]===rf?"selected":""}>${o[1]}</option>`).join("")}</select></div><div><label>Cari PO / peternak</label><input id="rq" value="${esc(rq)}"></div></div>
+<div class="m" style="margin-top:8px">Ledger Amartha mencatat <b>pokok</b>: credit = pencairan/talangan (nominal pengajuan), debit = penutupan loan (pokok, atau total tagihan kalau lewat jurnal "repayment atas"). Loan di atas cut-off tidak dihitung kurang.</div></div>
+<div class="k"><div class="kp"><span>PO diperiksa</span><b>${fmt(rows.length)}</b><small>${fmt(rows.length-iss.length)} sesuai</small></div><div class="kp"><span>Perlu dicek</span><b class="${iss.length?"bad":"ok"}">${fmt(iss.length)}</b></div><div class="kp"><span>Repayment belum diinput</span><b class="${nrep.length?"bad":"ok"}">${fmt(nrep.length)}</b><small>tagihan ${fmt(nrep.reduce((s,r)=>s+bayar(r.l),0))}</small></div><div class="kp"><span>Credit belum ada</span><b class="${ncr.length?"warn":"ok"}">${fmt(ncr.length)}</b></div><div class="kp"><span>PO di ledger, tak ada di loan</span><b class="${lo.length?"bad":"ok"}">${fmt(lo.length)}</b></div><div class="kp"><span>Saldo ledger (credit−debit)</span><b>${fmt(ledNet)}</b><small>pokok Disburse loan ${fmt(loanOs)} · selisih ${fmt(ledNet-loanOs)}</small></div></div>
+<div class="card"><div class="h" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px"><h2>${fmt(sh.length)} PO${sh.length>300?" (300 teratas)":""}</h2><span><button class="g" data-x="rk">Unduh Excel hasil rekon</button> <button class="g" data-r="po">Copy No PO (hasil filter)</button> <button data-r="rp">Copy "repayment atas …"</button></span></div><div class="sc"><table><thead><tr><th>No PO</th><th>Peternak</th><th>Status</th><th>Cair</th><th>Repayment</th><th class="n">Pokok loan</th><th class="n">Tagihan</th><th class="n">Ledger credit</th><th class="n">Ledger debit</th><th>Catatan</th></tr></thead><tbody>${sh.slice(0,300).map(r=>`<tr><td>${esc(r.l.po)}</td><td>${esc(r.l.nama)}</td><td><span class="tag">${esc(r.l.st)}</span></td><td>${dd(r.l.dis)}</td><td>${dd(r.l.rep)}</td><td class="n">${fmt(r.l.nom)}</td><td class="n">${fmt(bayar(r.l))}</td><td class="n">${fmt(r.a.cre)}</td><td class="n">${fmt(r.a.deb)}</td><td class="${r.sv===2?"bad":r.sv===1?"warn":"ok"}" style="white-space:normal;min-width:260px">${r.is.length?esc(r.is.map(x=>x[0]).join("; ")):"Sesuai"}</td></tr>`).join("")||'<tr><td class="m">Tidak ada data</td></tr>'}</tbody></table></div></div>
+${lo.length?`<div class="card"><h2>PO ada di ledger tapi tidak ada di data loan (${lo.length})</h2><div class="sc"><table style="min-width:0"><thead><tr><th>No PO</th><th class="n">Credit</th><th class="n">Debit</th></tr></thead><tbody>${lo.slice(0,100).map(k=>`<tr><td>${esc(k)}</td><td class="n">${fmt(A[k].cre)}</td><td class="n">${fmt(A[k].deb)}</td></tr>`).join("")}</tbody></table></div></div>`:""}
+${ml.length?`<div class="card"><h2>Baris ledger banyak-PO yang totalnya tidak cocok dengan tagihan (${ml.length})</h2><div class="sc"><table style="min-width:0"><thead><tr><th>Tgl</th><th class="n">Ledger</th><th class="n">Jumlah tagihan PO</th><th class="n">Selisih</th><th>Keterangan</th></tr></thead><tbody>${ml.map(m=>`<tr><td>${dd(m.l.dt)}</td><td class="n">${fmt(m.l.deb||m.l.cre)}</td><td class="n">${fmt(m.sum)}</td><td class="n bad">${fmt((m.l.deb||m.l.cre)-m.sum)}</td><td style="white-space:normal;max-width:420px">${esc(m.l.txt.slice(0,220))}</td></tr>`).join("")}</tbody></table></div></div>`:""}
+${np.length?`<div class="card"><h2>Baris ledger tanpa No PO (${np.length})</h2><div class="sc"><table style="min-width:0"><thead><tr><th>Tgl</th><th class="n">Debit</th><th class="n">Credit</th><th>Keterangan</th></tr></thead><tbody>${np.slice(0,50).map(m=>`<tr><td>${dd(m.dt)}</td><td class="n">${fmt(m.deb)}</td><td class="n">${fmt(m.cre)}</td><td style="white-space:normal;max-width:480px">${esc(m.txt.slice(0,200))}</td></tr>`).join("")}</tbody></table></div></div>`:""}`}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-r]");if(!b)return;const t=(b.dataset.r==="rp"?"repayment atas ":"")+(window.__pl||[]).join(", ");(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).catch(()=>{const x=document.createElement("textarea");x.value=t;document.body.appendChild(x);x.select();document.execCommand("copy");x.remove()});const o=b.textContent;b.textContent="Tersalin ✓";setTimeout(()=>b.textContent=o,1200)});
+function lbl(l){if(l.rep&&l.due){const d=Math.round((new Date(l.rep)-new Date(l.due))/864e5);const sf=l.bk?" (mutasi bank)":l.man?" (manual)":"";return d<=0?["Tepat waktu"+sf,"ok"]:["Terlambat "+d+" hari"+sf,"bad"]}
+if(l.st!=="Disburse"||!l.due)return[l.st||"-",""];const x=dayDiff(l.due);return x<0?["Belum tercatat bayar · lewat "+(-x)+" hari","bad"]:x===0?["Jatuh tempo hari ini","warn"]:["Jatuh tempo "+x+" hari lagi","warn"]}
+function ovl(){for(const [k,l] of Object.entries(S.loans)){
+if(l.man&&!l.o){l.o={rep:"",st:l.ost||l.st};delete l.ost}
+if(l.o){l.rep=l.o.rep;l.st=l.o.st;delete l.o;delete l.man;delete l.bk}
+if(S.manual[k]&&l.rep)delete S.manual[k];
+const b=S.bank[k],m=S.manual[k];
+if(b||m){l.o={rep:l.rep,st:l.st};l.rep=b||m;if(b)l.bk=1;else l.man=1;if(l.st==="Disburse")l.st="Completed"}}}
+document.addEventListener("change",e=>{const gb=e.target.closest("[data-gb]");if(gb){const ks=gb.dataset.gb.split("|"),sa=gb.closest(".gp").querySelector("[data-ga]");ks.forEach(k=>{if(gb.value)S.bank[k]=gb.value;else delete S.bank[k];if(sa&&sa.value)S.acct[k]=sa.value});save();render();return}const ga=e.target.closest("[data-ga]");if(ga){const ks=ga.dataset.ga.split("|"),sb=ga.closest(".gp").querySelector("[data-gb]");ks.forEach(k=>{if(ga.value)S.acct[k]=ga.value;else delete S.acct[k];if(sb&&sb.value)S.bank[k]=sb.value});save();render();return}const bk=e.target.closest("[data-bk]");if(bk){if(bk.value)S.bank[bk.dataset.bk]=bk.value;else delete S.bank[bk.dataset.bk];save();render();return}const pd=e.target.closest("[data-pd]");if(pd){const v=pd.value.replace(/\D/g,"");if(v)S.paid[pd.dataset.pd]=parseInt(v,10);else delete S.paid[pd.dataset.pd];save();render();return}const ac=e.target.closest("[data-ac]");if(ac){if(ac.value)S.acct[ac.dataset.ac]=ac.value;else delete S.acct[ac.dataset.ac];save();render();return}const m=e.target.closest("[data-m]");if(m){if(m.value)S.manual[m.dataset.m]=m.value;else delete S.manual[m.dataset.m];save();render()}});
+document.addEventListener("click",e=>{const cn=e.target.closest("[data-cn]");if(cn){copyTxt(cn.dataset.cn);const o=cn.textContent;cn.textContent="✓";setTimeout(()=>cn.textContent=o,900);return}const pe=e.target.closest("[data-pe]");if(pe){S.paid[pe.dataset.pe]=+pe.dataset.v;save();render();return}const x=e.target.closest("[data-mx]");if(x){delete S.manual[x.dataset.mx];save();render();return}const bx=e.target.closest("[data-bx]");if(bx){delete S.bank[bx.dataset.bx];save();render();return}const ba=e.target.closest("[data-bkall]");if(ba){const d=$("bb"+ba.dataset.i).value,ac=$("ba"+ba.dataset.i).value;if(!d&&!ac){alert("Pilih tanggal mutasi bank dan/atau rekening dulu");return}ba.dataset.bkall.split("|").forEach(k=>{if(d)S.bank[k]=d;if(ac)S.acct[k]=ac});save();render();return}
+const b=e.target.closest("[data-mk]");if(b){const d=$("mb"+b.dataset.i).value;if(!d){alert("Pilih tanggal bayar dulu");return}b.dataset.mk.split("|").forEach(k=>S.manual[k]=d);save();render()}
+const i=e.target.closest('input[type="date"],input[type="month"]');if(i){try{i.showPicker()}catch(z){}}});
+const ACCTS=["MANDIRI 997","MANDIRI 773","BCA 888","BCA 878","BRI 303"];
+const D=s=>s?new Date(s+"T12:00:00"):"";
+function effSrc(l){return l.bk?"Mutasi bank":l.man?"Input manual":l.rep?"Master":"-"}
+function exL(a){return a.map(l=>{const k=key(l.po);return{"No PO":l.po,"Peternak":l.nama,"Kode RAB":l.rab,"Status":l.st,"Tgl Cair":D(l.dis),"Jatuh Tempo":D(l.due),"Tgl Repayment (efektif)":D(l.rep),"Sumber Tgl Repayment":effSrc(l),"Tgl di Master":D(l.o?l.o.rep:l.rep),"Tgl Mutasi Bank":D(S.bank[k]),"Rekening Bayar":S.acct[k]||"","Sudah di Odoo":S.done[k]?"Ya":"","Nominal Pengajuan":l.nom,"Platform Fee":l.fee,"Admin %":l.nom?l.fee/l.nom:"","Interest":l.int,"Interest %":l.nom?l.int/l.nom:"","Total Tagihan":bayar(l),"Keterangan":lbl(l)[0]}})}
+function exLed(){return Object.values(S.led).sort((a,b)=>a.dt<b.dt?-1:1).map(l=>({"Tanggal":D(l.dt),"Keterangan":l.txt,"Debit":l.deb,"Credit":l.cre,"No PO":l.pos.join(", ")}))}
+function addRk(add){const R=window.__rk,rr=r=>({"No PO":r.l.po,"Peternak":r.l.nama,"Status Loan":r.l.st,"Tgl Cair":D(r.l.dis),"Tgl Repayment":D(r.l.rep),"Pokok Loan":r.l.nom,"Total Tagihan":bayar(r.l),"Ledger Credit":r.a.cre,"Ledger Debit":r.a.deb,"Catatan":r.is.length?r.is.map(x=>x[0]).join("; "):"Sesuai"});
+add("Sudah Match",R.rows.filter(r=>r.sv===0).map(rr));add("Perlu Dicek",R.rows.filter(r=>r.sv>0).sort((a,b)=>b.sv-a.sv).map(rr));
+add("PO hanya di Ledger",R.lo.map(k=>({"No PO":k,"Credit":R.A[k].cre,"Debit":R.A[k].deb})));
+add("Multi-PO tidak cocok",R.ml.map(m=>({"Tanggal":D(m.l.dt),"Nominal Ledger":m.l.deb||m.l.cre,"Jumlah Tagihan PO":m.sum,"Selisih":(m.l.deb||m.l.cre)-m.sum,"Keterangan":m.l.txt})));
+add("Ledger tanpa No PO",R.np.map(m=>({"Tanggal":D(m.dt),"Debit":m.deb,"Credit":m.cre,"Keterangan":m.txt})))}
+function sheet(rows){const ws=XLSX.utils.json_to_sheet(rows.length?rows:[{"(kosong)":""}],{cellDates:true});const r=XLSX.utils.decode_range(ws["!ref"]),H=[];
+for(let c=r.s.c;c<=r.e.c;c++){const h=ws[XLSX.utils.encode_cell({r:0,c})];H.push(h?String(h.v):"")}
+ws["!cols"]=H.map(h=>({wch:Math.max(12,Math.min(60,h.length+4))}));ws["!autofilter"]={ref:ws["!ref"]};
+for(let R=1;R<=r.e.r;R++)for(let c=0;c<=r.e.c;c++){const cell=ws[XLSX.utils.encode_cell({r:R,c})];if(!cell)continue;if(cell.t==="d")cell.z="dd/mm/yyyy";else if(cell.t==="n")cell.z=/%/.test(H[c])?"0.00%":"#,##0"}
+return ws}
+function buildWb(t){const wb=XLSX.utils.book_new(),add=(n,r)=>XLSX.utils.book_append_sheet(wb,sheet(r),n),hl=Object.keys(S.led||{}).length>0;let nm="loan-hub";
+if(t==="rp"){const x=window.__rpl;if(!x)return null;add("Repayment "+x.rd,exL(x.list));const G={};x.list.forEach(l=>(G[l.nama]=G[l.nama]||[]).push(l));
+add("Ringkasan Peternak",Object.entries(G).map(([n,g])=>{const pv=S.paid[x.rd+"|"+n],tot=g.reduce((t,l)=>t+bayar(l),0),sm=k=>g.reduce((t,l)=>t+l[k],0),ft=x.base.filter(l=>l.nama===n).reduce((t,l)=>t+bayar(l),0),sl=pv==null?"":Math.round(ft-pv);return{"Peternak":n,"Jumlah PO":g.length,"Nominal Pengajuan":sm("nom"),"Platform Fee":sm("fee"),"Interest":sm("int"),"Total Tagihan (PO tampil)":tot,"Total Tagihan (semua PO tanggal ini)":ft,"Total Dibayarkan (manual)":pv==null?"":pv,"Selisih Tagihan - Dibayar":sl,"Keterangan Selisih":pv==null?"Belum diisi":Math.abs(sl)<=tol?"Sesuai":sl>0?"Kurang bayar":"Lebih bayar"}}));nm="repayment-"+x.rd}
+else{if(t==="loan"||t==="all"){add("Data Loan",exL(L()));if(hl)add("Ledger Amartha",exLed())}
+if((t==="rk"||t==="all")&&hl&&L().length){rek();addRk(add)}
+nm=t==="loan"?"data-loan":t==="rk"?"hasil-rekon":"loan-hub-lengkap"}
+return wb.SheetNames.length?{wb,nm}:null}
+async function dlx(wb,name){const buf=XLSX.write(wb,{type:"array",bookType:"xlsx",cellDates:true});
+try{const d=window.claude&&await window.claude.use("downloads");if(d){await d.save({filename:name,data:buf});return}}catch(e){if(e&&e.code==="declined")return}
+XLSX.writeFile(wb,name,{cellDates:true})}
+document.addEventListener("click",async e=>{const b=e.target.closest("[data-x]");if(!b)return;const o=b.textContent;b.textContent="Menyiapkan…";
+try{const r=buildWb(b.dataset.x);if(!r){msg(b.dataset.x==="rk"?"Upload data loan dan ledger dulu untuk mengunduh hasil rekon.":"Belum ada data untuk diunduh.")}else await dlx(r.wb,r.nm+"-"+today+".xlsx")}catch(x){msg("Gagal membuat Excel: "+x.message)}finally{b.textContent=o}});
+const og={};
+let GS=null,gsBusy=false,gsTm=null;try{GS=JSON.parse(localStorage.getItem("lh_gs")||"null")}catch(e){}
+const gsInfo=t=>{const e=$("gsm");if(e)e.textContent=t};
+async function gsCall(b){const r=await fetch(GS.url,{method:"POST",body:JSON.stringify({token:GS.token,...b})});const j=await r.json();if(!j.ok)throw new Error(j.error==="token"?"kode rahasia salah":(j.error||"gagal"));return j}
+function gsSnap(){return{loans:cleanLoans(),led:Object.values(S.led),meta:S.meta,done:S.done,manual:S.manual,bank:S.bank,acct:S.acct,paid:S.paid}}
+async function gsPush(j,sig){const rev=Date.now();await gsCall({action:"save",rev,z:await gz(j)});S.sy.g={rev,sig};await persist()}
+async function gsPull(){const r=await gsCall({action:"load"});if(!r.data)throw new Error("belum ada data di Google Drive");const v=JSON.parse(await ungz(r.data.z));
+S.loans={};v.loans.forEach(l=>S.loans[key(l.po)]=l);S.led={};v.led.forEach(l=>S.led[l.k]=l);S.meta=v.meta||{};["done","manual","bank","acct","paid"].forEach(k=>S[k]=v[k]||{});
+S.sy.g={rev:r.data.rev,sig:sg(JSON.stringify(gsSnap()))};await persist();render()}
+function gsSched(){if(!GS)return;clearTimeout(gsTm);gsTm=setTimeout(gsSync,3000)}
+async function gsSync(){if(!GS)return;if(gsBusy){return}gsBusy=true;setCloud("☁ Google Drive: menyinkronkan…","");
+try{S.sy=S.sy||{};const h=await gsCall({action:"head"}),j=JSON.stringify(gsSnap()),sig=sg(j),ly=S.sy.g,has=Object.keys(S.loans).length+Object.keys(S.led).length>0;let act="none";
+if(h.rev){if(!ly)act=has?(confirm("Ada data di Google Drive. Pakai data Google untuk menggantikan data di browser ini?\n\nOK = pakai data Google\nBatal = kirim data browser ini ke Google")?"load":"save"):"load";else if(h.rev>ly.rev)act=ly.sig===sig?"load":"save";else act=ly.sig!==sig?"save":"none"}else act=has?"save":"none";
+if(act==="load")await gsPull();else if(act==="save")await gsPush(j,sig);
+const t=new Date().toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"});setCloud("☁ Google Drive tersinkron "+t,"ok");gsInfo(act==="load"?"Data dimuat dari Google Drive.":act==="save"?"Data tersimpan ke Google Drive.":"Sudah sama dengan Google Drive.")}
+catch(e){setCloud("☁ Google Drive gagal: "+e.message,"bad");gsInfo("Gagal: "+e.message)}
+finally{gsBusy=false}}
+function gsStart(){const u=$("gsu"),t=$("gst");if(GS){u.value=GS.url;t.value=GS.token;gsSync()}
+$("gsc").onclick=async()=>{const url=u.value.trim(),tk=t.value.trim();if(!/^https:\/\/script\.google\.com\/macros\//.test(url)||!tk){gsInfo("Isi URL Apps Script (diawali https://script.google.com/macros/) dan kode rahasia.");return}GS={url,token:tk};localStorage.setItem("lh_gs",JSON.stringify(GS));await gsSync()};
+$("gsn").onclick=async()=>{if(!GS){gsInfo("Hubungkan dulu.");return}gsBusy=false;try{setCloud("☁ Google Drive: menyimpan…","");const j=JSON.stringify(gsSnap());await gsPush(j,sg(j));setCloud("☁ Google Drive tersinkron","ok");gsInfo("Data tersimpan ke Google Drive.")}catch(e){setCloud("☁ Google Drive gagal: "+e.message,"bad");gsInfo("Gagal: "+e.message)}};
+$("gsl").onclick=async()=>{if(!GS){gsInfo("Hubungkan dulu.");return}if(!confirm("Timpa data di browser ini dengan data dari Google Drive?"))return;try{await gsPull();setCloud("☁ Google Drive tersinkron","ok");gsInfo("Data dimuat dari Google Drive.")}catch(e){gsInfo("Gagal: "+e.message)}};
+$("gsx").onclick=()=>{localStorage.removeItem("lh_gs");GS=null;u.value="";t.value="";setCloud("💾 Data tersimpan di browser ini","m");gsInfo("Terputus dari Google Drive. Data di browser dan di Google tidak dihapus.")}}
+
+const PARTS=["loans","led","done","manual","bank","acct","paid","meta"];let CL=null,syncing=false,again=false,stm=null;
+function setCloud(t,c){const e=$("cloud");if(e){e.textContent=t;e.className="cloud "+(c||"")}}
+function cleanLoans(){return Object.values(S.loans).map(l=>{if(!l.o&&!l.man&&!l.bk)return l;const c={...l};if(l.o){c.rep=l.o.rep;c.st=l.o.st}delete c.o;delete c.man;delete c.bk;return c})}
+function pdata(p){return p==="loans"?cleanLoans():p==="led"?Object.values(S.led):S[p]}
+function hsh(str){let h1=0xdeadbeef,h2=0x41c6ce57;for(let i=0;i<str.length;i++){const c=str.charCodeAt(i);h1=Math.imul(h1^c,2654435761);h2=Math.imul(h2^c,1597334677)}h1=Math.imul(h1^(h1>>>16),2246822507)^Math.imul(h2^(h2>>>13),3266489909);h2=Math.imul(h2^(h2>>>16),2246822507)^Math.imul(h1^(h1>>>13),3266489909);return(4294967296*(2097151&h2)+(h1>>>0)).toString(36)}
+const sg=j=>j.length+"-"+hsh(j);
+const b64=u=>{let s="";for(let i=0;i<u.length;i+=32768)s+=String.fromCharCode.apply(null,u.subarray(i,i+32768));return btoa(s)};
+async function gz(str){const st=new Blob([str]).stream().pipeThrough(new CompressionStream("gzip"));return b64(new Uint8Array(await new Response(st).arrayBuffer()))}
+async function ungz(b){const bin=Uint8Array.from(atob(b),c=>c.charCodeAt(0));const st=new Blob([bin]).stream().pipeThrough(new DecompressionStream("gzip"));return await new Response(st).text()}
+async function rt(f){for(let i=0;;i++){try{return await f()}catch(e){if(i<4&&e&&(e.code==="resource_exhausted"||e.code==="unavailable")){await new Promise(r=>setTimeout(r,800*(i+1)+Math.random()*300));continue}throw e}}}
+function hasData(p){return p==="loans"?Object.keys(S.loans).length:p==="led"?Object.keys(S.led).length:Object.keys(S[p]).length}
+async function pushPart(p,head,j){const z=await gz(j),n=Math.max(1,Math.ceil(z.length/180000));
+for(let i=0;i<n;i++)await rt(()=>CL.doc("sdata/"+p+"-"+i).set({z:z.slice(i*180000,(i+1)*180000)}));
+const old=(head.parts[p]||{}).n||0;for(let i=n;i<old;i++)await rt(()=>CL.doc("sdata/"+p+"-"+i).delete());
+const rev=Date.now();head.parts[p]={n,rev};S.sy[p]={rev,sig:sg(j)}}
+async function pullPart(p,hp){let z="";for(let i=0;i<hp.n;i++){const s=await rt(()=>CL.doc("sdata/"+p+"-"+i).get());if(!s.exists)throw new Error("data cloud tidak lengkap");z+=s.data().z}
+const v=JSON.parse(await ungz(z));
+if(p==="loans"){S.loans={};v.forEach(l=>S.loans[key(l.po)]=l)}else if(p==="led"){S.led={};v.forEach(l=>S.led[l.k]=l)}else S[p]=v;
+S.sy[p]={rev:hp.rev,sig:sg(JSON.stringify(pdata(p)))}}
+function schedSync(ms){if(!CL)return;clearTimeout(stm);stm=setTimeout(syncNow,ms==null?2000:ms)}
+async function syncNow(){if(!CL)return;if(syncing){again=true;return}syncing=true;setCloud("☁ Menyinkronkan…","");
+try{const hs=await rt(()=>CL.doc("sync/head").get()),head=hs.exists?hs.data():{};head.parts=head.parts||{};S.sy=S.sy||{};let pulled=false,pushed=false;
+for(const p of PARTS){const hp=head.parts[p],ly=S.sy[p],j=JSON.stringify(pdata(p)),sig=sg(j),changed=!ly||ly.sig!==sig;
+if(hp&&(!ly||(hp.rev>ly.rev&&!changed))){await pullPart(p,hp);pulled=true;continue}
+if((!ly&&hasData(p))||(ly&&changed)){await pushPart(p,head,j);pushed=true}}
+if(pushed)await rt(()=>CL.doc("sync/head").set({parts:head.parts}));
+if(pulled||pushed)await persist();
+if(pulled){msg("Data dimuat dari cloud akunmu: "+Object.keys(S.loans).length+" PO, "+Object.keys(S.led).length+" baris ledger.");render()}
+setCloud("☁ Tersinkron "+new Date().toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"}),"ok")}
+catch(e){setCloud("☁ Gagal sinkron"+(e&&e.code==="quota_exceeded"?" (penyimpanan cloud penuh)":e&&e.code==="invalid_argument"?" (akun ini hanya bisa membaca)":""),"bad");console.error(e)}
+finally{syncing=false;if(again){again=false;schedSync()}}}
+async function initCloud(){if(typeof CompressionStream==="undefined"){setCloud("💾 Data tersimpan di browser ini","m");return}
+try{const c=window.claude&&await window.claude.use("db");if(!c){setCloud("💾 Data tersimpan di browser ini","m");return}CL=c;S.sy=S.sy||{};await syncNow();
+CL.doc("sync/head").onSnapshot(sn=>{if(!sn.exists)return;const h=sn.data().parts||{};if(Object.keys(h).some(p=>!S.sy[p]||h[p].rev>S.sy[p].rev))schedSync(300)},()=>{})}
+catch(e){setCloud("💾 Data tersimpan di browser ini","m")}}
+document.addEventListener("click",e=>{if(e.target.closest("#cloud"))schedSync(0)});
+
+function copyTxt(t){(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).catch(()=>{const x=document.createElement("textarea");x.value=t;document.body.appendChild(x);x.select();document.execCommand("copy");x.remove()})}
+document.addEventListener("toggle",e=>{const d=e.target;if(d.dataset&&d.dataset.og!==undefined){if(d.open)og[d.dataset.og]=1;else delete og[d.dataset.og]}},true);
+const qa=s=>esc(s).replace(/"/g,"&quot;");
+function refreshKet(){document.querySelectorAll("[data-sk]").forEach(td=>{const on=!!S.done[td.dataset.sk],b=td.dataset.b;td.className=on?"ok":td.dataset.bc;td.textContent=on?"✓ Sudah di Odoo"+(/^Belum tercatat/.test(b)?" · master belum update":" · "+b):b})}
+function updCnt(i){const a=[...document.querySelectorAll('[data-g="'+i+'"]')],e=$("cnt"+i),bt=document.querySelector('[data-all="'+i+'"]');if(bt){const all=a.length>0&&a.every(c=>c.checked);bt.textContent=all?"✓ Semua sudah di Odoo":"✓ Semua Odoo";bt.classList.toggle("on",all)}if(e)e.textContent=a.filter(c=>c.checked).length+"/"+a.length+" sudah di Odoo"}
+const MN=["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+const mlab=m=>m?MN[+m.slice(5,7)-1]+" "+m.slice(0,4):"-";
+const iso=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+function nomSearch(){const q=+nq;if(!q)return"";const ls=L().filter(l=>l.st!=="Reject"),G1={},G2={},md=l=>l.o?l.o.rep:l.rep;
+ls.forEach(l=>{new Set([l.rep||l.due,md(l)||l.due]).forEach(d=>{if(!d)return;const t=bayar(l),k=d+"|"+l.nama,a=G1[k]||(G1[k]={d,n:l.nama,s:0,c:0,done:0}),b=G2[d]||(G2[d]={d,s:0,c:0});a.s+=t;a.c++;if(S.done[key(l.po)])a.done++;b.s+=t;b.c++})});
+const R=[];Object.values(G1).forEach(g=>{if(Math.abs(g.s-q)<=tol)R.push({t:"Peternak + tanggal",d:g.d,n:g.n,c:g.c,s:g.s,done:g.done})});
+Object.values(G2).forEach(g=>{if(g.c>1&&Math.abs(g.s-q)<=tol)R.push({t:"Semua peternak di tanggal",d:g.d,n:"",c:g.c,s:g.s})});
+ls.forEach(l=>{if(Math.abs(bayar(l)-q)<=tol){const d=l.rep||l.due,g=G1[d+"|"+l.nama];if(g&&g.c>1)R.push({t:"Satu PO",d,n:l.nama,c:1,s:bayar(l),po:l.po})}});
+R.sort((a,b)=>a.d<b.d?1:-1);
+return`<div class="sec">Hasil cari nominal · Rp ${fmt(q)}</div><div class="card">${R.length?`<div class="sc"><table><thead><tr><th>Cocok dengan</th><th>Peternak</th><th>Tanggal</th><th class="n">PO</th><th class="n">Total tagihan</th><th class="n"></th></tr></thead><tbody>${R.slice(0,20).map(r=>`<tr><td><span class="tag">${r.t}</span></td><td>${esc(r.n||"Semua")}</td><td>${dd(r.d)}</td><td class="n">${r.c}${r.po?" · "+esc(r.po):""}</td><td class="n">${fmt(r.s)}</td><td class="n"><button class="g" data-jump="${qa(r.d+"|"+r.n)}">Buka</button></td></tr>`).join("")}</tbody></table></div>`:`<div class="m">Tidak ada total tagihan peternak/tanggal yang cocok dengan Rp ${fmt(q)} (toleransi ±Rp ${fmt(tol)}). Kalau satu mutasi hanya melunasi sebagian PO, cocokkan manual lewat daftar di bawah.</div>`}</div>`}
+function rp(){const ls=L().filter(l=>l.st!=="Reject");if(!ls.length)return'<div class="card m">Belum ada data loan.</div>';
+const ds=[...new Set(ls.filter(l=>l.rep).map(l=>l.rep))].sort();if(!rd)rd=ds[ds.length-1]||today;if(!rm)rm=rd.slice(0,7);if(!r1)r1=rd;if(!r2)r2=rd;
+const inP=d=>!!d&&(pm==="d"?d===rd:pm==="m"?d.slice(0,7)===rm:(!r1||d>=r1)&&(!r2||d<=r2));
+const PK=pm==="d"?rd:pm==="m"?"m"+rm:"r"+r1+"~"+r2,plab=pm==="d"?dd(rd):pm==="m"?mlab(rm):dd(r1)+" – "+dd(r2);
+const mdt=l=>l.o?l.o.rep:l.rep;
+const base=ls.filter(l=>inP(mdt(l))||inP(l.rep)||(rdue&&((!l.rep&&l.st==="Disburse"&&inP(l.due))||((l.man||l.bk)&&inP(l.due)))));
+const ns=[...new Set(base.map(l=>l.nama))].sort();if(rb&&!ns.includes(rb))rb="";
+const list=base.filter(l=>(!rb||l.nama===rb)&&(!ra||(ra==="-"?!S.acct[key(l.po)]:S.acct[key(l.po)]===ra))&&(!rod||(rod==="y")===!!S.done[key(l.po)]));window.__rpl={rd:PK,list,base};
+const G={};list.forEach(l=>(G[l.nama]=G[l.nama]||[]).push(l));
+const nrep=base.filter(l=>inP(mdt(l))).length,ndue=base.length-nrep;
+const cm={};ls.forEach(l=>{const dset=new Set();if(l.rep)dset.add(l.rep);if(l.o&&l.o.rep)dset.add(l.o.rep);if(rdue&&((!l.rep&&l.st==="Disburse")||l.man||l.bk)&&l.due)dset.add(l.due);dset.forEach(d=>cm[d]=(cm[d]||0)+1)});
+const cmo={};Object.keys(cm).forEach(d=>{if(d<=today)cmo[d.slice(0,7)]=(cmo[d.slice(0,7)]||0)+cm[d]});
+const chips=pm==="d"?Object.keys(cm).filter(d=>d<=today).sort().reverse().slice(0,10).map(x=>`<span class="chip${x===rd?" on":""}" data-d="${x}">${dd(x).slice(0,5)} · ${cm[x]}</span>`).join(""):pm==="m"?Object.keys(cmo).sort().reverse().slice(0,12).map(x=>`<span class="chip${x===rm?" on":""}" data-mo="${x}">${mlab(x)} · ${cmo[x]}</span>`).join(""):"";
+const hasLed=Object.keys(S.led||{}).length>0,lp=new Set();if(hasLed)Object.values(S.led).forEach(l=>l.pos.forEach(p=>lp.add(p)));
+const dateCtl=pm==="d"?`<div class="row" style="gap:6px"><button class="g stp" data-step="-1">‹</button><input type="date" id="rd" value="${rd}"><button class="g stp" data-step="1">›</button></div>`:pm==="m"?`<div class="row" style="gap:6px"><button class="g stp" data-step="-1">‹</button><input type="month" id="rm" value="${rm}"><button class="g stp" data-step="1">›</button></div>`:`<div class="row" style="gap:6px"><input type="date" id="r1" value="${r1}"><span class="m">s/d</span><input type="date" id="r2" value="${r2}"></div>`;
+let h=`<div class="sec">Filter</div><div class="card"><div class="row"><div><label>Periode</label><div class="seg">${[["d","Tanggal"],["m","Bulan"],["r","Rentang"]].map(([k,t])=>`<button class="${pm===k?"on":""}" data-pm="${k}">${t}</button>`).join("")}</div></div><div><label>${pm==="d"?"Tanggal repayment":pm==="m"?"Bulan repayment":"Rentang tanggal"}</label>${dateCtl}</div><div><label>Peternak</label><select id="rb"><option value="">Semua</option>${ns.map(n=>`<option ${n===rb?"selected":""}>${esc(n)}</option>`).join("")}</select></div><div><label>Rekening bayar</label><select id="ra"><option value="">Semua</option><option value="-" ${ra==="-"?"selected":""}>Belum diisi</option>${ACCTS.map(a=>`<option ${a===ra?"selected":""}>${a}</option>`).join("")}</select></div><div><label>Status input Odoo</label><select id="rod"><option value="">Semua</option><option value="y" ${rod==="y"?"selected":""}>Sudah diinput</option><option value="n" ${rod==="n"?"selected":""}>Belum diinput</option></select></div><div><label>Cari nominal mutasi (punya siapa?)</label><input id="nq" inputmode="numeric" value="${nq?fmt(+nq):""}" placeholder="isi nominal, lalu Enter" style="width:210px"></div></div><label style="display:flex;gap:6px;align-items:center;margin:10px 0 0;font-weight:500"><input type="checkbox" id="rdue" ${rdue?"checked":""}> sertakan PO yang jatuh tempo di periode ini tapi repayment belum tercatat di master</label>${chips?`<div class="chips">${chips}</div>`:""}</div>`+nomSearch();
+if(!list.length)return h+'<div class="card m">Tidak ada PO repayment/jatuh tempo pada periode ini.</div>';
+h+=`<div class="sec">Ringkasan periode</div><div class="card m">${plab}: <b>${nrep}</b> PO tercatat repayment di master${ndue?`, <b class="warn">${ndue}</b> PO jatuh tempo tapi belum ada tanggal repayment`:""}. <button class="g" data-x="rp" style="margin-left:8px">Unduh Excel</button></div>`;
+const cpb=(n,t)=>`<button class="cp" data-cn="${Math.round(n)}" title="Copy angka">${t||"📋"}</button>`;
+return h+`<div class="sec">Daftar peternak · ${Object.keys(G).length}</div>`+Object.entries(G).map(([n,g],i)=>{g.sort((a,b)=>a.po<b.po?-1:1);
+const s=k=>g.reduce((t,x)=>t+x[k],0),tot=g.reduce((t,x)=>t+bayar(x),0),pos=g.map(x=>x.po).join(", "),nom=s("nom"),keys=g.map(x=>key(x.po)).join("|");
+const p=(a,b)=>b?pc(a/b):"-";const full=base.filter(l=>l.nama===n),ft=full.reduce((t,x)=>t+bayar(x),0),pk=PK+"|"+n,pv=S.paid[pk],sl=pv==null?null:Math.round(ft-pv),pc2=pv==null?"m":Math.abs(sl)<=tol?"ok":"bad",pk2=pv==null?"Nominal dibayar belum diisi":Math.abs(sl)<=tol?"Sesuai":sl>0?"Kurang bayar":"Lebih bayar";
+const bks=[...new Set(g.map(x=>S.bank[key(x.po)]||""))],bkv=bks.length===1?bks[0]:"",acs=[...new Set(g.map(x=>S.acct[key(x.po)]||""))],acv=acs.length===1?acs[0]:"",mix=bks.length>1||acs.length>1;
+return `<section class="grp"><div class="gh"><div><span class="gn">${esc(n)}</span> <span class="m">· ${g.length} PO · <span id="cnt${i}"></span></span></div></div>
+<div class="k gk"><div class="kp"><span>Total tagihan</span><b>${fmt(tot)}${cpb(tot,"📋 Copy")}</b><small>Pokok ${fmt(nom)}</small><div class="qb"><button class="g" data-cp="${qa(pos)}">Copy PO</button><button class="g" data-cp="repayment atas ${qa(pos)}">Copy Ket</button><button class="g" data-all="${i}">✓ Semua Odoo</button></div></div>
+<div class="kp"><span>Pembayaran${mix?" (beragam)":""}</span><div class="pay"><input type="date" data-gb="${qa(keys)}" value="${bkv}" title="Tgl mutasi bank"><select data-ga="${qa(keys)}" title="Rekening bayar"><option value="">${mix&&!acv?"(beragam)":"Bank…"}</option>${ACCTS.map(a=>`<option ${acv===a?"selected":""}>${a}</option>`).join("")}</select></div><small>Tgl mutasi bank &amp; rekening. Mengisi tanggal = semua PO dianggap dibayar</small></div>
+<div class="kp"><span>Total dibayarkan</span><input data-pd="${qa(pk)}" inputmode="numeric" value="${pv!=null?fmt(pv):""}" placeholder="isi nominal" style="width:100%;font-size:16px;font-weight:700;padding:2px 6px;margin-top:2px"><small><button class="g" data-pe="${qa(pk)}" data-v="${Math.round(ft)}" style="padding:1px 8px;font-size:11px">= total tagihan</button></small></div>
+<div class="kp"><span>Selisih</span><b class="${pc2}">${sl==null?"-":fmt(sl)}</b><small><span class="${pc2}">${pk2}${sl!=null&&Math.abs(sl)>tol?" Rp "+fmt(Math.abs(sl)):""}</span>${Math.round(ft)!==Math.round(tot)?`<br>vs semua ${full.length} PO: ${fmt(ft)}`:""}</small></div>
+<div class="kp"><span>Admin</span><b>${fmt(s("fee"))}${cpb(s("fee"),"📋 Copy")}</b><small>${p(s("fee"),nom)} dari nominal</small></div><div class="kp"><span>Bunga</span><b>${fmt(s("int"))}${cpb(s("int"),"📋 Copy")}</b><small>${p(s("int"),nom)} dari nominal</small></div></div>
+<details class="dt" data-og="${qa(pk)}" ${og[pk]?"open":""}><summary>Rincian ${g.length} PO</summary><div class="sc"><table><thead><tr><th>Odoo</th><th>No PO</th><th>Kode RAB</th><th class="n">Nominal</th><th class="n">Admin (%)</th><th class="n">Interest (%)</th><th>Tgl pembayaran master</th><th>Tgl mutasi bank</th><th class="n">Total Tagihan</th><th>Keterangan</th>${hasLed?"<th>Ledger</th>":""}</tr></thead><tbody>${g.map(x=>{const t=lbl(x),k=key(x.po),mst=x.o?x.o.rep:x.rep;return`<tr><td style="text-align:center"><input type="checkbox" data-k="${k}" data-g="${i}" ${S.done[k]?"checked":""}></td><td>${esc(x.po)}</td><td class="wrap">${esc(x.rab.replace(x.nama+" - ",""))}</td><td class="n">${fmt(x.nom)}</td><td class="n">${fmt(x.fee)}<span class="pcs">${p(x.fee,x.nom)}</span>${cpb(x.fee)}</td><td class="n">${fmt(x.int)}<span class="pcs">${p(x.int,x.nom)}</span>${cpb(x.int)}</td><td>${mst?dd(mst):x.man?dd(x.rep)+" ✎":`<span class="m">belum · jt ${dd(x.due)}</span>`}</td><td>${S.bank[k]?dd(S.bank[k]):'<span class="m">-</span>'}</td><td class="n">${fmt(bayar(x))}</td><td class="${t[1]}" data-sk="${k}" data-b="${esc(t[0])}" data-bc="${t[1]}">${esc(t[0])}</td>${hasLed?`<td class="${lp.has(k)?"ok":"m"}">${lp.has(k)?"✓ ada":"belum"}</td>`:""}</tr>`}).join("")}</tbody><tfoot><tr><td colspan="3">Total</td><td class="n">${fmt(nom)}</td><td class="n">${fmt(s("fee"))}<span class="pcs">${p(s("fee"),nom)}</span></td><td class="n">${fmt(s("int"))}<span class="pcs">${p(s("int"),nom)}</span></td><td colspan="2"></td><td class="n">${fmt(tot)}</td><td colspan="${hasLed?2:1}"></td></tr></tfoot></table></div></details></section>`}).join("")}
+document.addEventListener("change",e=>{const c=e.target.closest("[data-k]");if(c){if(c.checked)S.done[c.dataset.k]=1;else delete S.done[c.dataset.k];save();updCnt(c.dataset.g);refreshKet();if(rod)render()}});
+document.addEventListener("click",e=>{const b=e.target.closest("[data-all]");if(b){const a=[...document.querySelectorAll('[data-g="'+b.dataset.all+'"]')],on=a.some(c=>!c.checked);a.forEach(c=>{c.checked=on;if(on)S.done[c.dataset.k]=1;else delete S.done[c.dataset.k]});save();updCnt(b.dataset.all);refreshKet();if(rod)render()}});
+document.addEventListener("click",e=>{const c=e.target.closest("[data-d]");if(c){rd=c.dataset.d;pm="d";render();return}const mo=e.target.closest("[data-mo]");if(mo){rm=mo.dataset.mo;render();return}const pmb=e.target.closest("[data-pm]");if(pmb){pm=pmb.dataset.pm;render();return}const st=e.target.closest("[data-step]");if(st){const k=+st.dataset.step;if(pm==="m"){const d=new Date(+rm.slice(0,4),+rm.slice(5,7)-1+k,1);rm=iso(d).slice(0,7)}else{const d=new Date(rd+"T12:00:00");d.setDate(d.getDate()+k);rd=iso(d)}render();return}const jp=e.target.closest("[data-jump]");if(jp){const [d,n]=jp.dataset.jump.split("|");pm="d";rd=d;rb=n||"";render();return}const b=e.target.closest("[data-cp]");if(b){const t=b.dataset.cp;(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).catch(()=>{const x=document.createElement("textarea");x.value=t;document.body.appendChild(x);x.select();document.execCommand("copy");x.remove()});const o=b.textContent;b.textContent="Tersalin ✓";setTimeout(()=>b.textContent=o,1200)}});
+function render(){ovl();const v=$("v");v.innerHTML=tab==="dash"?dash():tab==="rp"?rp():tab==="pet"?pet():rek();document.querySelectorAll("#v .tag:not([data-d])").forEach(t=>{const c={Completed:"t-ok",Disburse:"t-info",Approve:"t-warn",Reject:"t-bad"}[t.textContent.trim()];if(c)t.classList.add(c)});
+const q=$("qp");if(q)q.oninput=e=>{qp=e.target.value;const p=e.target.selectionStart;render();const n=$("qp");n.focus();n.setSelectionRange(p,p)};
+const rj=$("rj");if(rj)rj.onchange=e=>{inclRej=e.target.checked;render()};
+const cp=$("cp");if(cp)cp.onclick=()=>{const t=$("pot");t.select();(navigator.clipboard?navigator.clipboard.writeText(t.value):Promise.reject()).catch(()=>document.execCommand("copy"));cp.textContent="Tersalin ✓"};
+if(tab==="rp"){document.querySelectorAll("[data-all]").forEach(b=>updCnt(b.dataset.all));refreshKet()}if(tab==="rp"){const bd=(id,f)=>{const x=$(id);if(x)x.onchange=f};
+bd("rd",e=>{rd=e.target.value;render()});bd("rm",e=>{rm=e.target.value;render()});bd("r1",e=>{r1=e.target.value;render()});bd("r2",e=>{r2=e.target.value;render()});
+bd("rb",e=>{rb=e.target.value;render()});bd("ra",e=>{ra=e.target.value;render()});bd("rod",e=>{rod=e.target.value;render()});bd("rdue",e=>{rdue=e.target.checked;render()});bd("nq",e=>{nq=e.target.value.replace(/\D/g,"");render()})}
+const cu=$("cu");if(cu){cu.onclick=()=>{try{cu.showPicker()}catch(e){}};cu.onchange=e=>{cut=e.target.value;render()};$("tl").onchange=e=>{tol=+e.target.value||0;render()};$("rf").onchange=e=>{rf=e.target.value;render()};$("rq").oninput=e=>{rq=e.target.value;const p=e.target.selectionStart;render();const n=$("rq");n.focus();n.setSelectionRange(p,p)}}}
+document.addEventListener("click",e=>{const r=e.target.closest("tr[data-p]");if(r){sel=r.dataset.p;tab="pet";[...$("tabs").children].forEach(x=>x.classList.toggle("on",x.dataset.t==="pet"));render();window.scrollTo({top:tab==="pet"?document.body.scrollHeight:0,behavior:"smooth"})}});
+load().then(v=>{if(v&&v.loans){S=v;S.done=S.done||{};S.manual=S.manual||{};S.bank=S.bank||{};S.acct=S.acct||{};S.paid=S.paid||{};S.sy=S.sy||{};msg(`Data tersimpan: ${Object.keys(S.loans).length} PO, ${Object.keys(S.led||{}).length} baris ledger. Loan terakhir: ${S.meta.loan||"-"}`+(S.meta.pv!==2?" · PERLU upload ulang Book3.xlsx: data tersimpan masih memakai Total Tagihan pembulatan.":""))}render();initCloud();gsStart()});
+</script></body></html>
